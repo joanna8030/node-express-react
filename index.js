@@ -15,8 +15,7 @@ app.get('/issues', function(req, res) {
 });
 
 app.post('/issues', function(req, res) {
-  const issue = new DB(req.body.issue);
-  issue.save(issue, function(err, docs) {
+  DB.create(req.body.issue, function(err, docs) {
     if (err) res.json({});
     res.json(docs);
   });
