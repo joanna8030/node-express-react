@@ -4,10 +4,11 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start": "export NODE_ENV=production && browserify src/index.jsx --extension=.jsx -o bundle.js -t babelify && node index.js",
+    "start": "export NODE_ENV=production && browserify src/index.jsx --extension=.jsx -o bundle.js -t babelify && PORT=3000 babel-node index.js",
     "test": "export NODE_ENV=development && mocha --compilers js:babel-register --require test/utils/setup.js",
     "lint": "eslint .",
-    "dev": "export NODE_ENV=development && webpack-dev-server -d --config webpack.config.js --content-base src/ --colors --hot --progress --inline --watch",
+    "dev": "export NODE_ENV=development && webpack-dev-server -d --config webpack.config.js --content-base src/ --colors --hot --progress --inline --watch --port=8080",
+    "server": "PORT=3000 babel-node index.js",
     "gitUser": "git config user.name 'Rebecca' && git config user.email 'joanna8030@gmail.com'",
     "run-docker": "sh run-docker.sh"
   },
@@ -43,7 +44,9 @@
     "webpack-dev-server": "^1.16.2"
   },
   "dependencies": {
+    "babel-cli": "^6.22.2",
     "body-parser": "^1.15.2",
+    "cors": "^2.8.1",
     "express": "^4.14.0",
     "isomorphic-fetch": "^2.2.1",
     "react": "^15.4.1",
