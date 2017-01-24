@@ -1,42 +1,50 @@
 const express = require('express');
 const DB = require('./db').IssueModel;
 const bodyParser = require('body-parser');
+const cors = require('cors');
 
 const app = express();
 
+app.use(cors());
 app.use(bodyParser.json());
 app.use(express.static(__dirname));
 
 app.get('/issues', function(req, res) {
   DB.find({ timeStamp: null }, function(err, docs) {
-    if (err) res.json([{}]);
-    res.json(docs);
+    if (err) res.json([{ isSuccess: false, err: err.message }]);
+    res.json({ issues: docs, isSuccess: true });
   });
 });
 
 app.post('/issues', function(req, res) {
-  DB.create(req.body.issue, function(err, docs) {
-    if (err) res.json({});
-    res.json(docs);
+  DB.create(req.body.issue, function(err, doc) {
+    if (err) res.json({ isSuccess: false, err: err.message });
+    res.json({ issue: doc, isSuccess: true });
   });
 });
 
 app.put('/issues/:issue_id', function(req, res) {
   DB.findOneAndUpdate({ seq: req.params.issue_id }, req.body.issue, { new: true }, function(err, doc) {
-    if (err) res.json({});
-    res.json(doc);
+    if (doc === null) {
+      res.json({ isSuccess: false, err: 'Error: Cannot find seq = ' + req.params.issue_id });
+    } else {
+      res.json({ issue: doc, isSuccess: true });
+    }
   });
 });
 
 app.delete('/issues/:issue_id', function(req, res) {
   DB.findOneAndUpdate({ seq: req.params.issue_id }, { timeStamp: new Date() }, function(err, doc) {
-    if (err) res.json({});
-    res.json(doc.seq);
+    if (doc === null) {
+      res.json({ isSuccess: false, err: 'Error: Cannot find seq = ' + req.params.issue_id });
+    } else {
+      res.json({ seq: doc.seq, isSuccess: true });
+    }
   });
 });
 
-app.listen(3000, function() {
-  console.log('application listening on port 3000!');
+app.listen(process.env.PORT || '3000', function() {
+  console.log('application listening on port ', this.address().port);
 });
 
 module.exports = app;

@@ -21,6 +21,7 @@ class App extends React.Component {
     return (
       <div>
         <Button onClick={() => this.handleShowNewModal()}>New</Button>
+        <div style={{ color: 'red' }}>{this.props.errorMsg}</div>
         <TrackingTable issues={this.props.issues} showModal={this.props.actions.handleShowModal} onDropRow={this.props.actions.dropRow} />
         <ModalDialog
           show={this.props.showModal}
@@ -39,7 +40,8 @@ const mapStateToProps = state => ({
   issues: state.operation.issues,
   title: state.modalControl.title,
   issue: state.modalControl.issue,
-  showModal: state.modalControl.showModal
+  showModal: state.modalControl.showModal,
+  errorMsg: state.errorHandler
 });
 const mapDispatchToProps = dispatch => ({
   actions: bindActionCreators(actions, dispatch)
@@ -60,6 +62,7 @@ App.propTypes = {
     priority: React.PropTypes.string,
     isUpdate: React.PropTypes.bool
   }),
+  errorMsg: React.PropTypes.string,
   actions: React.PropTypes.shape({
     dropRow: React.PropTypes.func,
     handleShowModal: React.PropTypes.func,
