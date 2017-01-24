@@ -49,7 +49,15 @@ In development stage, use webpack bundler to implement hot-reload:
 ``` sh
 npm run dev
 ```
-For rebuild Dockerfile, run
+In the same time, start server:
+``` sh
+npm run server
+```    
+For rebuild Dockerfile, run:
 ``` sh
 docker build -t image_name .
+```
+To get into container, run:
+``` sh
+docker exec -it container_name /bin/bash
 ```
