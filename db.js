@@ -1,9 +1,9 @@
 /* eslint import/no-extraneous-dependencies: ["error", {"devDependencies": true}] */
 const mongoose = require('mongoose');
-const ProductionDBUri = require('./src/constants/uri').ProductionDBUri;
-const TestDBUri = require('./src/constants/uri').TestDBUri;
+const PRODUCTION_DB_URI = require('./src/constants/uri').PRODUCTION_DB_URI;
+const TEST_DB_URI = require('./src/constants/uri').TEST_DB_URI;
 
-const dbUri = process.env.NODE_ENV === 'production' ? ProductionDBUri : TestDBUri;
+const dbUri = process.env.NODE_ENV === 'production' ? PRODUCTION_DB_URI : TEST_DB_URI;
 mongoose.connect(dbUri);
 const db = mongoose.connection;
 db.on('error', console.error.bind(console, 'connection error:'));
@@ -16,7 +16,7 @@ const CounterSchema = new Schema({
   seq: { type: Number, default: 0 }
 });
 
-const counter = mongoose.model('Counter', CounterSchema, 'Counter');
+const CounterModel = mongoose.model('Counter', CounterSchema);
 
 const Issue = new Schema({
   seq: Number,
@@ -31,9 +31,17 @@ const Issue = new Schema({
 
 Issue.pre('save', function(next) {
   const that = this;
-  counter.findByIdAndUpdate({ _id: 'seq' }, { $inc: { seq: 1 } }, function(err, doc) {
-    that.seq = doc.seq;
-    next();
+  CounterModel.findByIdAndUpdate({ _id: 'seq' }, { $inc: { seq: 1 } }, function(err, doc) {
+    if (doc !== null) {
+      that.seq = doc.seq;
+      next();
+    } else {
+      const seqNumber = new CounterModel({ _id: 'seq', seq: 2 });
+      seqNumber.save(seqNumber, (error, counter) => {
+        that.seq = counter.seq - 1;
+        next();
+      });
+    }
   });
 });
 

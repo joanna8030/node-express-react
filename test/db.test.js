@@ -2,13 +2,13 @@
 import chai from 'chai';
 import mongoose from 'mongoose';
 import DB from '../db';
-import { TestDBUri } from '../src/constants/uri';
+import { TEST_DB_URI } from '../src/constants/uri';
 
 const expect = chai.expect;
 
 describe('mongodb', () => {
   before((done) => {
-    mongoose.createConnection(TestDBUri, done);
+    mongoose.createConnection(TEST_DB_URI, done);
     DB.IssueModel.remove({}, () => {});
   });
   it('can be saved and assign an unique seq', (done) => {
@@ -35,7 +35,8 @@ describe('mongodb', () => {
     });
   });
   after((done) => {
-    DB.IssueModel.remove({}, () => {
+    mongoose.connect(TEST_DB_URI, () => {
+      mongoose.connection.db.dropDatabase();
       done();
     });
   });
