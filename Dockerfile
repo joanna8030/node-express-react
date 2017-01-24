@@ -4,6 +4,7 @@ FROM ubuntu:latest
 RUN apt-get -y update && \
     apt-get -y install sysvinit-utils && \
     apt-get -y install sudo && \
+    apt-get -y install vim && \
     apt-get -y install wget && \
     apt-get -y install npm && \
     npm install -g n && \
