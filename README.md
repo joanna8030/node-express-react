@@ -1,8 +1,7 @@
 # node-express-react
 
-This is Step 6 from node-express-react training.  
-In this step, put data in mongodb, and use redux-thunk to handle async actions.
-For testing available and easily share developing environment, deploy this application on docker
+This is Step 7 from node-express-react training.  
+In this step, separate CRUD into multi page to create single page application
 
 ## Prerequisites
 - ES6 syntax (Babel as transpiler)
@@ -13,6 +12,7 @@ For testing available and easily share developing environment, deploy this appli
 - React 15.4.1
 - Redux (implement unidirectional data flow)
 - docker
+- react-router
 
 ## Getting Started
 Following these steps to run the project on your local machine for development or testing purposes:  
