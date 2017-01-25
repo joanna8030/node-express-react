@@ -1,5 +1,6 @@
 import React from 'react';
 import { tr, td, Button } from 'react-bootstrap';
+import { Link } from 'react-router';
 
 export default class IssueRow extends React.Component {
   constructor(props) {
@@ -8,10 +9,6 @@ export default class IssueRow extends React.Component {
   }
   handleDropRow() {
     this.props.onDropRow(this.props.issue.seq);
-  }
-
-  handleEditBtnClick() {
-    this.props.showModal('Update', { ...this.props.issue });
   }
 
   render() {
@@ -25,7 +22,7 @@ export default class IssueRow extends React.Component {
         <td>{this.props.issue.owner}</td>
         <td>{this.props.issue.priority}</td>
         <td>
-          <Button onClick={() => this.handleEditBtnClick()}>Edit</Button>
+          <Link to={`/update/${this.props.issue.seq}`}><Button>Edit</Button></Link>
           <Button onClick={this.handleDropRow}>Delete</Button>
         </td>
       </tr>
@@ -44,5 +41,4 @@ IssueRow.propTypes = {
     isUpdate: React.PropTypes.bool
   }),
   onDropRow: React.PropTypes.func,
-  showModal: React.PropTypes.func
 };

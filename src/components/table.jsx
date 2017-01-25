@@ -6,10 +6,6 @@ export default class TrackingTable extends React.Component {
   constructor(props) {
     super(props);
     this.handleDropRow = this.handleDropRow.bind(this);
-    this.showModal = this.showModal.bind(this);
-  }
-  showModal(title, seq) {
-    this.props.showModal(title, seq);
   }
   handleDropRow(seq) {
     this.props.onDropRow(seq);
@@ -21,7 +17,6 @@ export default class TrackingTable extends React.Component {
         <IssueRow
           key={issue.seq}
           issue={issue}
-          showModal={this.showModal}
           onDropRow={this.handleDropRow}
         />
       ));
@@ -49,6 +44,5 @@ export default class TrackingTable extends React.Component {
 
 TrackingTable.propTypes = {
   issues: React.PropTypes.arrayOf(React.PropTypes.object),
-  onDropRow: React.PropTypes.func,
-  showModal: React.PropTypes.func
+  onDropRow: React.PropTypes.func
 };
