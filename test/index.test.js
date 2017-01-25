@@ -38,6 +38,21 @@ describe('server', () => {
       });
   });
 
+  it('#get, should get one issue', (done) => {
+    const issue = [{ seq: 1, status: 'Open', category: 'cat1', title: 'title1', owner: 'Allen', priority: 'P1', isUpdate: false }];
+    const stub = sinon.stub(DB.IssueModel, 'find').yields(null, issue);
+    chai.request(app)
+      .get('/issues/' + issue[0].seq)
+      .end((err, res) => {
+        expect(DB.IssueModel.find).to.have.been.calledOnce;
+        expect(res).to.have.status(200);
+        expect(res.body.issue).to.be.instanceof(Object);
+        expect(res.body.issue.seq).to.eql(issue[0].seq);
+        stub.restore();
+        done();
+      });
+  });
+
   it('#post, should post an issue', (done) => {
     const issue = {
       status: 'Open',

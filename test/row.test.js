@@ -12,7 +12,6 @@ const expect = chai.expect;
 describe('row.jsx', () => {
   let component;
   const issue = { seq: 1, status: 'Open', category: 'cat1', title: 'title1', owner: 'Allen', priority: 'P1', isUpdate: false };
-  const showModalSpy = sinon.spy();
   const handleDropRowSpy = sinon.spy();
 
   beforeEach(() => {
@@ -20,7 +19,6 @@ describe('row.jsx', () => {
       <IssueRow
         key={issue.seq}
         issue={issue}
-        showModal={showModalSpy}
         onDropRow={handleDropRowSpy}
       />
     );
@@ -67,12 +65,13 @@ describe('row.jsx', () => {
     expect(testDom.style.backgroundColor).to.be.equal('rgb(241, 244, 66)');
   });
 
-  it('should call showModal when click edit', () => {
+  it('should render Link which href is correct', () => {
     const buttons = ReactTestUtils.scryRenderedDOMComponentsWithTag(component, 'BUTTON');
     expect(buttons).to.exist;
     const editButton = buttons[0];
-    ReactTestUtils.Simulate.click(editButton);
-    expect(showModalSpy.calledOnce).to.be.true;
+    expect(editButton.textContent).to.eql('Edit');
+    expect(editButton.parentNode.nodeName).to.eql('A');
+    // expect(editButton.parentNode.getAttribute('href')).to.eql('/update/1');
   });
 
   it('should call handleDropRow when click delete', () => {

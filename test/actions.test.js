@@ -63,6 +63,18 @@ describe('actions', () => {
         });
     });
 
+    it('fetchIssue should create fetchIssueSuccess when fetching data has been done', () => {
+      const issue = { seq: 1, status: 'Close', category: 'cat2', title: 'title3', owner: 'Allen', priority: 'P3', isUpdate: false };
+      stub = sinon.stub(DB.IssueModel, 'find').yields(null, [issue]);
+      const expectedActions = [{ type: types.FetchIssueSuccess, issue }];
+      const store = mockStore({ issue: {} });
+      return store.dispatch(actions.fetchIssue())
+        .then(() => {
+          expect(DB.IssueModel.find).have.been.calledOnce;
+          expect(store.getActions()).to.deep.equal(expectedActions);
+        });
+    });
+
     it('addRow should create handleAddRow after insert data', () => {
       const issue = { status: 'Close', category: 'cat2', title: 'title3', owner: 'Allen', priority: 'P3', isUpdate: false };
       stub = sinon.stub(DB.IssueModel, 'create').yields(null, issue);

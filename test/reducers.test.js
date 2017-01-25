@@ -1,7 +1,7 @@
 /* eslint import/no-extraneous-dependencies: ["error", {"devDependencies": true}] */
 import chai from 'chai';
 import * as types from '../src/constants/ActionTypes';
-import { operation, modalControl, errorHandler } from '../src/reducers';
+import { operation, issue, errorHandler } from '../src/reducers';
 
 const expect = chai.expect;
 
@@ -21,32 +21,23 @@ describe('reducers', () => {
       expect(operation(state, { type: types.DeleteRow, seq: 1 })).to.eql({ issues: [] });
     });
     it('should handle AddRow', () => {
-      const issue = { seq: 1, status: 'Close', category: 'cat2', title: 'title3', owner: 'Allen', priority: 'P3', isUpdate: false };
-      expect(operation({ issues: [] }, { type: types.AddRow, issue })).to.eql({ issues: [issue] });
+      const testIssue = { seq: 1, status: 'Close', category: 'cat2', title: 'title3', owner: 'Allen', priority: 'P3', isUpdate: false };
+      expect(operation({ issues: [] }, { type: types.AddRow, issue: testIssue })).to.eql({ issues: [testIssue] });
     });
     it('should handle UpdateRow', () => {
       const state = {
         issues:
           [{ seq: 2, status: 'Open', category: 'cat1', title: 'title2', owner: 'Allen', priority: 'P2', isUpdate: false }]
       };
-      const issue = { seq: 2, status: 'Close', category: 'cat', title: 'title', owner: 'Allen', priority: 'P', isUpdate: false };
-      expect(operation(state, { type: types.UpdateRow, issue })).to.eql({ issues: [issue] });
+      const updateIssue = { seq: 2, status: 'Close', category: 'cat', title: 'title', owner: 'Allen', priority: 'P', isUpdate: false };
+      expect(operation(state, { type: types.UpdateRow, issue: updateIssue })).to.eql({ issues: [updateIssue] });
     });
   });
 
-  describe('modalControl', () => {
-    it('should handle initialState', () => {
-      const initialState = { showModal: false, title: 'New Issue', issue: {} };
-      expect(modalControl(undefined, {})).to.eql(initialState);
-    });
-    it('should handle open modal', () => {
-      const state = { showModal: false, title: 'New Issue', issue: {} };
-      const action = { type: types.ShowModal, title: 'New Issue', issue: {} };
-      expect(modalControl(state, action)).to.eql({ showModal: true, title: 'New Issue', issue: {} });
-    });
-    it('should handle close modal', () => {
-      const state = { showModal: false };
-      expect(modalControl(state, { type: types.CloseModal })).to.eql({ showModal: false });
+  describe('issue', () => {
+    it('should handle fetch issue success', () => {
+      const Issue = { seq: 1, status: 'Close', category: 'cat2', title: 'title3', owner: 'Allen', priority: 'P3', isUpdate: false };
+      expect(issue({}, { type: types.FetchIssueSuccess, issue: Issue })).to.eql(Issue);
     });
   });
 
@@ -62,6 +53,9 @@ describe('reducers', () => {
     });
     it('should handle update data failed', () => {
       expect(errorHandler('', { type: types.FetchFailed, msg: 'update data failed' })).to.eql('update data failed');
+    });
+    it('should handle get data by seq failed', () => {
+      expect(errorHandler('', { type: types.FetchIssueFailed, msg: 'get issue failed' })).to.eql('get issue failed');
     });
   });
 });
