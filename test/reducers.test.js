@@ -1,7 +1,7 @@
 /* eslint import/no-extraneous-dependencies: ["error", {"devDependencies": true}] */
 import chai from 'chai';
 import * as types from '../src/constants/ActionTypes';
-import { operation, modalControl } from '../src/reducers';
+import { operation, modalControl, errorHandler } from '../src/reducers';
 
 const expect = chai.expect;
 
@@ -33,6 +33,7 @@ describe('reducers', () => {
       expect(operation(state, { type: types.UpdateRow, issue })).to.eql({ issues: [issue] });
     });
   });
+
   describe('modalControl', () => {
     it('should handle initialState', () => {
       const initialState = { showModal: false, title: 'New Issue', issue: {} };
@@ -46,6 +47,21 @@ describe('reducers', () => {
     it('should handle close modal', () => {
       const state = { showModal: false };
       expect(modalControl(state, { type: types.CloseModal })).to.eql({ showModal: false });
+    });
+  });
+
+  describe('errorHandler', () => {
+    it('should handle fetch data failed', () => {
+      expect(errorHandler('', { type: types.FetchFailed, msg: 'fetch data failed' })).to.eql('fetch data failed');
+    });
+    it('should handle drop data failed', () => {
+      expect(errorHandler('', { type: types.DropFailed, msg: 'drop data failed' })).to.eql('drop data failed');
+    });
+    it('should handle insert data failed', () => {
+      expect(errorHandler('', { type: types.InsertFailed, msg: 'insert data failed' })).to.eql('insert data failed');
+    });
+    it('should handle update data failed', () => {
+      expect(errorHandler('', { type: types.FetchFailed, msg: 'update data failed' })).to.eql('update data failed');
     });
   });
 });
