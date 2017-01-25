@@ -9,6 +9,8 @@ export const handleUpdateRow = issue => ({ type: types.UpdateRow, issue });
 export const handleShowModal = (title, issue) => ({ type: types.ShowModal, title, issue });
 export const handleCloseModal = () => ({ type: types.CloseModal });
 export const fetchDataSuccess = issues => ({ type: types.FetchSuccess, issues });
+export const fetchIssueSuccess = issue => ({ type: types.FetchIssueSuccess, issue });
+export const fetchIssueFailed = msg => ({ type: types.FetchIssueFailed, msg });
 export const fetchDataFailed = msg => ({ type: types.FetchFailed, msg });
 export const addDataFailed = msg => ({ type: types.InsertFailed, msg });
 export const updateDataFailed = msg => ({ type: types.UpdateFailed, msg });
@@ -23,6 +25,22 @@ export const fetchData = () => (
             dispatch(fetchDataSuccess(data.issues));
           } else {
             dispatch(fetchDataFailed(data.err));
+          }
+        }
+      )
+    ))
+  )
+);
+export const fetchIssue = seq => (
+  dispatch => (
+    fetch(fetchUrl + seq)
+    .then(res => (
+      res.json().then(
+        (data) => {
+          if (data.isSuccess) {
+            dispatch(fetchIssueSuccess(data.issue));
+          } else {
+            dispatch(fetchIssueFailed(data.err));
           }
         }
       )

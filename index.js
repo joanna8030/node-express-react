@@ -16,6 +16,13 @@ app.get('/issues', function(req, res) {
   });
 });
 
+app.get('/issues/:issue_seq', function(req, res) {
+  DB.find({ seq: req.params.issue_seq }, function(err, doc) {
+    if (err) res.json({ isSuccess: false, err: err.message });
+    res.json({ issue: doc[0], isSuccess: true });
+  });
+});
+
 app.post('/issues', function(req, res) {
   DB.create(req.body.issue, function(err, doc) {
     if (err) res.json({ isSuccess: false, err: err.message });

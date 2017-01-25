@@ -8,3 +8,5 @@ export const FetchFailed = 'FETCH_FAILED';
 export const InsertFailed = 'INSERT_FAILED';
 export const UpdateFailed = 'UPDATE_FAILED';
 export const DropFailed = 'DROP_FAILED';
+export const FetchIssueSuccess = 'FETCH_ISSUE_SUCCESS';
+export const FetchIssueFailed = 'FETCH_ISSUE_FAILED';

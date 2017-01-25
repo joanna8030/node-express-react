@@ -36,16 +36,10 @@ export const operation = (state = {}, action) => {
   }
 };
 
-const initialState = { showModal: false, title: 'New Issue', issue: {} };
-
-export const modalControl = (state = initialState, action) => {
+export const issue = (state = {}, action) => {
   switch (action.type) {
-    case types.ShowModal:
-      return { ...state, showModal: true, title: action.title, issue: action.issue };
-    case types.CloseModal:
-    case types.AddRow:
-    case types.UpdateRow:
-      return { ...state, showModal: false };
+    case types.FetchIssueSuccess:
+      return action.issue;
     default:
       return state;
   }
@@ -61,6 +55,8 @@ export const errorHandler = (state = '', action) => {
       return action.msg;
     case types.UpdateFailed:
       return action.msg;
+    case types.FetchIssueFailed:
+      return action.msg;
     default:
       return '';
   }
@@ -68,7 +64,7 @@ export const errorHandler = (state = '', action) => {
 
 const Reducers = combineReducers({
   operation,
-  modalControl,
+  issue,
   errorHandler
 });
 
