@@ -32,7 +32,7 @@ class NewForm extends React.Component {
   }
   render() {
     return (
-      <div className='container' style={{ border: '2px solid', 'text-align': 'center' }}>
+      <div className='container' style={{ border: '2px solid', textAlign: 'center' }}>
         <h2>New Issue</h2><br />
         <form>
             Status: <input type='text' name='status' value={this.state.issue.status} ref={input => this.statusInput = input} onChange={this.handleChange} /><br /><br />

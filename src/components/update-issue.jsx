@@ -41,7 +41,7 @@ class UpdateForm extends React.Component {
   }
   render() {
     return (
-      <div className='container' style={{ border: '2px solid', 'text-align': 'center' }}>
+      <div className='container' style={{ border: '2px solid', textAlign: 'center' }}>
         <h2>Update Issue</h2>
         <form>
           seq: {this.state.issue.seq}<br /><br />
