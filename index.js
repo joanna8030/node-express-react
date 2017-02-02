@@ -26,7 +26,7 @@ app.post('/issues', function(req, res) {
 app.put('/issues/:issue_id', function(req, res) {
   DB.findOneAndUpdate({ seq: req.params.issue_id }, req.body.issue, { new: true }, function(err, doc) {
     if (doc === null) {
-      res.json({ isSuccess: false, err: 'Error: Cannot find seq = ' + req.params.issue_id });
+      res.json({ isSuccess: false, err: 'Error: Cannot find issue with ' + req.params.issue_id });
     } else {
       res.json({ issue: doc, isSuccess: true });
     }
@@ -36,7 +36,7 @@ app.put('/issues/:issue_id', function(req, res) {
 app.delete('/issues/:issue_id', function(req, res) {
   DB.findOneAndUpdate({ seq: req.params.issue_id }, { timeStamp: new Date() }, function(err, doc) {
     if (doc === null) {
-      res.json({ isSuccess: false, err: 'Error: Cannot find seq = ' + req.params.issue_id });
+      res.json({ isSuccess: false, err: 'Error: Cannot find issue with ' + req.params.issue_id });
     } else {
       res.json({ seq: doc.seq, isSuccess: true });
     }
