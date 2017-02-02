@@ -1,7 +1,5 @@
 #!/bin/bash
 
-ENV="PRODUCTION"
-
 if [ ! "$(docker images -q rebecca518/application)" ]; then
   echo "pull image from docker hub"
   docker pull rebecca518/application:latest
@@ -17,10 +15,9 @@ echo "run container"
 docker run -p 27017:27017 -p 3000:3000 -v $PWD:/app --name application_instance -d rebecca518/application
 
 # run api in container
-if [ $ENV == "PRODUCTION" ]; then
+if [ $NODE_ENV == "production" ]; then
   docker exec -it application_instance npm run start
 else
-  echo "development"
   npm run dev & docker exec -it application_instance npm run server
   kill -9 $(pgrep -f webpack)
 fi
