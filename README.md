@@ -45,9 +45,9 @@ npm run test
 ```
 
 ## Development stage
-In development stage, change ENV variable to "DEVELOPMENT" in run-docker.sh:
+In development stage, change NODE_ENV variable to "development" in package.json:
 ``` sh
-ENV="DEVELOPMENT"
+"run-docker": "export NODE_ENV=development && sh run-docker.sh"
 ```
 To get into container, run:
 ``` sh
