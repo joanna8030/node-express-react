@@ -45,19 +45,15 @@ npm run test
 ```
 
 ## Development stage
-In development stage, use webpack bundler to implement hot-reload:
+In development stage, change ENV variable to "DEVELOPMENT" in run-docker.sh:
 ``` sh
-npm run dev
-```
-In the same time, start server:
-``` sh
-npm run server
-```    
-For rebuild Dockerfile, run:
-``` sh
-docker build -t image_name .
+ENV="DEVELOPMENT"
 ```
 To get into container, run:
 ``` sh
 docker exec -it container_name /bin/bash
+```
+For rebuild Dockerfile, run:
+``` sh
+docker build -t image_name .
 ```
