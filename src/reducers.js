@@ -54,11 +54,8 @@ export const modalControl = (state = initialState, action) => {
 export const errorHandler = (state = '', action) => {
   switch (action.type) {
     case types.DropFailed:
-      return action.msg;
     case types.FetchFailed:
-      return action.msg;
     case types.InsertFailed:
-      return action.msg;
     case types.UpdateFailed:
       return action.msg;
     default:
