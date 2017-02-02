@@ -10,7 +10,7 @@
     "dev": "export NODE_ENV=development && webpack-dev-server -d --config webpack.config.js --content-base src/ --colors --hot --progress --inline --watch --port=8080",
     "server": "PORT=3000 babel-node index.js",
     "gitUser": "git config user.name 'Rebecca' && git config user.email 'joanna8030@gmail.com'",
-    "run-docker": "sh run-docker.sh"
+    "run-docker": "export NODE_ENV=development && sh run-docker.sh"
   },
   "devDependencies": {
     "babel-core": "^6.18.2",
