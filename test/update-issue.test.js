@@ -43,6 +43,14 @@ describe('update-issue.jsx', () => {
     const form = ReactTestUtils.scryRenderedDOMComponentsWithTag(component, 'FORM');
     expect(form).to.exist;
 
+    const buttons = ReactTestUtils.scryRenderedDOMComponentsWithTag(component, 'BUTTON');
+    expect(buttons).to.exist;
+    expect(buttons.length).to.be.equal(2);
+    expect(buttons[0].textContent).to.be.equal('Cancel');
+    expect(buttons[1].textContent).to.be.equal('Save');
+  });
+
+  it('should get data correctly', () => {
     const inputColumns = ReactTestUtils.scryRenderedDOMComponentsWithTag(component, 'INPUT');
     expect(inputColumns).to.have.length(5);
     expect(inputColumns[0].value).to.eql(issue.status);
@@ -50,12 +58,6 @@ describe('update-issue.jsx', () => {
     expect(inputColumns[2].value).to.eql(issue.title);
     expect(inputColumns[3].value).to.eql(issue.owner);
     expect(inputColumns[4].value).to.eql(issue.priority);
-
-    const buttons = ReactTestUtils.scryRenderedDOMComponentsWithTag(component, 'BUTTON');
-    expect(buttons).to.exist;
-    expect(buttons.length).to.be.equal(2);
-    expect(buttons[0].textContent).to.be.equal('Cancel');
-    expect(buttons[1].textContent).to.be.equal('Save');
   });
 
 });
