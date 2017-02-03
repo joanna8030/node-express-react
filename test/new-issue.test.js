@@ -7,7 +7,7 @@ import { Provider } from 'react-redux';
 import configureMockStore from 'redux-mock-store';
 import thunk from 'redux-thunk';
 import ReactDOM from 'react-dom';
-import NewForm from '../src/components/new-issue';
+import NewForm from '../src/containers/new-issue';
 
 const expect = chai.expect;
 const middlewares = [thunk];

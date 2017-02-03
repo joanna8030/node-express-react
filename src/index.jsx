@@ -6,8 +6,8 @@ import thunk from 'redux-thunk';
 import { browserHistory, Router, Route } from 'react-router';
 import reducer from './reducers';
 import App from './containers/container';
-import NewForm from './components/new-issue';
-import UpdateForm from './components/update-issue';
+import NewForm from './containers/new-issue';
+import UpdateForm from './containers/update-issue';
 
 const store = createStore(reducer, applyMiddleware(thunk));
 
