@@ -2,12 +2,21 @@ const express = require('express');
 const DB = require('./db').IssueModel;
 const bodyParser = require('body-parser');
 const cors = require('cors');
+const path = require('path');
 
 const app = express();
 
 app.use(cors());
 app.use(bodyParser.json());
 app.use(express.static(__dirname));
+
+app.get('/new', function(req, res) {
+  res.sendFile(path.join(__dirname, 'index.html'));
+});
+
+app.get('/update/:id', function(req, res) {
+  res.sendFile(path.join(__dirname, 'index.html'));
+});
 
 app.get('/issues', function(req, res) {
   DB.find({ timeStamp: null }, function(err, docs) {
