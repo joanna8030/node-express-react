@@ -16,7 +16,7 @@ const mockStore = configureMockStore(middlewares);
 describe('update-issue.jsx', () => {
   let component;
   const issue = { seq: 1, status: 'Open', category: 'cat1', title: 'title1', owner: 'Allen', priority: 'P1', isUpdate: false };
-  const store = mockStore({ issue: { issue } });
+  const store = mockStore({ issue: issue });
 
   beforeEach((done) => {
     const params = { id: '1' };
@@ -45,12 +45,11 @@ describe('update-issue.jsx', () => {
 
     const inputColumns = ReactTestUtils.scryRenderedDOMComponentsWithTag(component, 'INPUT');
     expect(inputColumns).to.have.length(5);
-    console.log(inputColumns[0].value);
-    // expect(inputColumns[0].value).to.eql(issue.status);
-    // expect(inputColumns[1].value).to.eql(issue.category);
-    // expect(inputColumns[2].value).to.eql(issue.title);
-    // expect(inputColumns[3].value).to.eql(issue.owner);
-    // expect(inputColumns[4].value).to.eql(issue.priority);
+    expect(inputColumns[0].value).to.eql(issue.status);
+    expect(inputColumns[1].value).to.eql(issue.category);
+    expect(inputColumns[2].value).to.eql(issue.title);
+    expect(inputColumns[3].value).to.eql(issue.owner);
+    expect(inputColumns[4].value).to.eql(issue.priority);
 
     const buttons = ReactTestUtils.scryRenderedDOMComponentsWithTag(component, 'BUTTON');
     expect(buttons).to.exist;
