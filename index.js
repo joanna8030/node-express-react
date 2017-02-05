@@ -1,8 +1,16 @@
-const express = require('express');
-const DB = require('./db').IssueModel;
-const bodyParser = require('body-parser');
-const cors = require('cors');
-const path = require('path');
+/* eslint react/jsx-filename-extension:0 */
+import express from 'express';
+import bodyParser from 'body-parser';
+import cors from 'cors';
+import React from 'react';
+import ReactDOMServer from 'react-dom/server';
+import { createStore, applyMiddleware } from 'redux';
+import thunk from 'redux-thunk';
+import { Provider } from 'react-redux';
+import { match, RouterContext } from 'react-router';
+import reducer from './src/reducers';
+import { IssueModel as DB } from './db';
+import routes from './src/routes';
 
 const app = express();
 
@@ -10,12 +18,38 @@ app.use(cors());
 app.use(bodyParser.json());
 app.use(express.static(__dirname));
 
-app.get('/new', function(req, res) {
-  res.sendFile(path.join(__dirname, 'index.html'));
-});
+function renderFullPage(html, preloadedState) {
+  return `
+  <!DOCTYPE html>
+  <html lang="en">
+  <head>
+      <meta charset="UTF-8">
+      <title>Issue Tracker</title>
+      <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/latest/css/bootstrap.min.css">
+  </head>
+  <body>
+      <h1>Issue Tracker</h1>
+      <div id="root">${html}</div>
+      <script src="/bundle.js"></script>
+      <script>
+        window.__PRELOADED_STATE__ = ${JSON.stringify(preloadedState).replace(/</g, '\\u003c')}
+      </script>
+  </body>
+  </html>
+    `;
+}
 
-app.get('/update/:id', function(req, res) {
-  res.sendFile(path.join(__dirname, 'index.html'));
+app.get('/new|update/:id', (req, res) => {
+  const store = createStore(reducer, applyMiddleware(thunk));
+  match({ routes: routes, location: req.url }, (err, redirect, props) => {
+    const appHtml = ReactDOMServer.renderToString(
+      <Provider store={store}>
+        <RouterContext {...props} />
+      </Provider>
+    );
+    const preloadedState = store.getState();
+    res.send(renderFullPage(appHtml, preloadedState));
+  });
 });
 
 app.get('/issues', function(req, res) {
