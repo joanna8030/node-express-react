@@ -19,11 +19,8 @@ RUN apt-get update && apt-get install -y mongodb-org
 RUN mkdir -p /data/db
 COPY /mongodb /data/db
 EXPOSE 27017
-# CMD ["mongod"]
-# CMD ["mongo"]
 
-
-ENTRYPOINT exec mongod
+# ENTRYPOINT exec mongod
 
 # run app
 RUN mkdir /app
@@ -33,3 +30,5 @@ ADD package.json /app
 # RUN npm install
 COPY . /app
 EXPOSE 3000
+
+CMD ["bash", "./docker-cmd.sh"]

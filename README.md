@@ -53,6 +53,10 @@ To get into container, run:
 ``` sh
 docker exec -it container_name /bin/bash
 ```
+To stop this container, run:
+``` sh
+docker stop application_instance
+```
 For rebuild Dockerfile, run:
 ``` sh
 docker build -t image_name .

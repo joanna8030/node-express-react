@@ -7,7 +7,7 @@
     "start": "export NODE_ENV=production && browserify src/index.jsx --extension=.jsx -o bundle.js -t babelify && PORT=3000 babel-node index.js",
     "test": "export NODE_ENV=development && mocha --compilers js:babel-register --require test/utils/setup.js",
     "lint": "eslint .",
-    "dev": "export NODE_ENV=development && webpack-dev-server -d --config webpack.config.js --content-base src/ --colors --hot --progress --inline --watch --port=8080 --history-api-fallback",
+    "dev": "export NODE_ENV=development && webpack-dev-server -d --config webpack.config.js --content-base src/ --colors --hot --progress --inline --watch --port=8080 --history-api-fallback --host=0.0.0.0",
     "server": "NODE_ENV=development PORT=3000 babel-node index.js",
     "gitUser": "git config user.name 'Rebecca' && git config user.email 'joanna8030@gmail.com'",
     "run-docker": "export NODE_ENV=development && sh run-docker.sh"
